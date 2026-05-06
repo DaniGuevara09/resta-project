@@ -1,0 +1,24 @@
+# Dependency directories
+node_modules/
+venv/
+.venv/
+env/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Secret configuration (Security goal)
+.env
+*.key
+*.pem
+
+# Docker persistent data (Kafka/DB)
+*/data-kafka/
+*/data-postgres/
+
+# IDEs and OS
+.vscode/
+.idea/
+.DS_Store
+*.log
