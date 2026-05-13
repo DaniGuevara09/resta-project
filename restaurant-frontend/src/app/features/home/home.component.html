@@ -1,0 +1,32 @@
+<div class="home-page">
+
+  <!-- Botón empleados — esquina superior derecha -->
+  <header class="home-header">
+    <button class="btn-staff" (click)="goToLogin()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2"/>
+        <path d="M7 11V7a5 5 0 0110 0v4"/>
+      </svg>
+      Empleados
+    </button>
+  </header>
+
+  <!-- Hero central -->
+  <main class="home-hero">
+    <h1 class="brand-name">{{ tenantName }}</h1>
+    <p class="brand-tagline">{{ tagline }}</p>
+
+    <button class="btn-menu" (click)="goToMenu()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/>
+        <rect x="9" y="3" width="6" height="4" rx="1"/>
+        <path d="M9 12h6M9 16h4"/>
+      </svg>
+      Ver menú
+    </button>
+
+  </main>
+
+</div>
