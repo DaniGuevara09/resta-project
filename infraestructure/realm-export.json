@@ -1,0 +1,176 @@
+{
+    "id": "Restaurant",
+    "realm": "Restaurant",
+    "displayName": "Sistema de Restaurantes",
+    "enabled": true,
+    "roles": {
+        "realm": [
+            {
+                "name": "admin",
+                "description": "Administrador del restaurante"
+            },
+            {
+                "name": "waiter",
+                "description": "Mesero"
+            },
+            {
+                "name": "chef",
+                "description": "Cocinero"
+            },
+            {
+                "name": "cashier",
+                "description": "Cajero"
+            }
+        ]
+    },
+    "clients": [
+        {
+            "clientId": "01",
+            "name": "KFC",
+            "enabled": true,
+            "clientAuthenticatorType": "client-secret",
+            "secret": "pSKjA8TYoUZlztxhDxwsKQN7WZwwHkzU",
+            "publicClient": false,
+            "directAccessGrantsEnabled": true,
+            "standardFlowEnabled": true
+        },
+        {
+            "clientId": "02",
+            "name": "Frisby",
+            "enabled": true,
+            "clientAuthenticatorType": "client-secret",
+            "secret": "qWErT8TYoUZlztxhDxwsKQN7WZwwHkzX",
+            "publicClient": false,
+            "directAccessGrantsEnabled": true,
+            "standardFlowEnabled": true
+        }
+    ],
+    "users": [
+        {
+            "username": "ana",
+            "enabled": true,
+            "credentials": [
+                {
+                    "type": "password",
+                    "value": "1234",
+                    "temporary": false
+                }
+            ],
+            "realmRoles": [
+                "admin"
+            ]
+        },
+        {
+            "username": "dani",
+            "enabled": true,
+            "credentials": [
+                {
+                    "type": "password",
+                    "value": "1234",
+                    "temporary": false
+                }
+            ],
+            "realmRoles": [
+                "waiter"
+            ]
+        },
+        {
+            "username": "camila",
+            "enabled": true,
+            "credentials": [
+                {
+                    "type": "password",
+                    "value": "1234",
+                    "temporary": false
+                }
+            ],
+            "realmRoles": [
+                "chef"
+            ]
+        },
+        {
+            "username": "andres",
+            "enabled": true,
+            "credentials": [
+                {
+                    "type": "password",
+                    "value": "1234",
+                    "temporary": false
+                }
+            ],
+            "realmRoles": [
+                "cashier"
+            ]
+        },
+        {
+            "username": "laura",
+            "enabled": true,
+            "credentials": [
+                {
+                    "type": "password",
+                    "value": "1234",
+                    "temporary": false
+                }
+            ],
+            "realmRoles": [
+                "admin"
+            ]
+        },
+        {
+            "username": "valentina",
+            "enabled": true,
+            "credentials": [
+                {
+                    "type": "password",
+                    "value": "1234",
+                    "temporary": false
+                }
+            ],
+            "realmRoles": [
+                "waiter"
+            ]
+        },
+        {
+            "username": "julio",
+            "enabled": true,
+            "credentials": [
+                {
+                    "type": "password",
+                    "value": "1234",
+                    "temporary": false
+                }
+            ],
+            "realmRoles": [
+                "chef"
+            ]
+        },
+        {
+            "username": "felipe",
+            "enabled": true,
+            "credentials": [
+                {
+                    "type": "password",
+                    "value": "1234",
+                    "temporary": false
+                }
+            ],
+            "realmRoles": [
+                "cashier"
+            ]
+        },
+        {
+            "username": "userResta",
+            "enabled": true,
+            "credentials": [
+                {
+                    "type": "password",
+                    "value": "userResta1234",
+                    "temporary": false
+                }
+            ],
+            "realmRoles": [
+                "admin"
+            ]
+        }
+    ]
+}
