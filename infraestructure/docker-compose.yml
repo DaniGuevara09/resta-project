@@ -10,7 +10,7 @@ services:
       - keycloak_data:/var/lib/postgresql/data
 
   keycloak:
-    image: quay.io/keycloak/keycloak:latest
+    image: quay.io/keycloak/keycloak:24.0
     command: start-dev
     environment:
       KC_DB: postgres
@@ -19,8 +19,9 @@ services:
       KC_DB_PASSWORD: keycloak
       KC_HOSTNAME_STRICT: false
       KC_HTTP_ENABLED: true
-      #KEYCLOAK_ADMIN: admin
-      #KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HOSTNAME: localhost
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
     ports:
       - "8082:8080"
     depends_on:
@@ -49,3 +50,4 @@ services:
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
 volumes:
   keycloak_data:
+ 
