@@ -1,24 +1,40 @@
-# Dependency directories
-node_modules/
+# --- SEGURIDAD (Separación de Política y Mecanismo) ---
+.env
+*.pem
+*.key
+
+# --- FRONTEND (Angular) ---
+# Carpeta de dependencias
+/resta-frontend/node_modules/
+# Archivos de compilación
+/resta-frontend/dist/
+/resta-frontend/.angular/
+# Logs de error
+npm-debug.log*
+yarn-error.log*
+
+# --- BACKEND NODE.JS ---
+/backend-node/node_modules/
+/backend-node/dist/
+
+# --- BACKEND PYTHON ---
+# Entornos virtuales
 venv/
 .venv/
 env/
-
-# Python bytecode
+# Archivos compilados de Python
 __pycache__/
 *.py[cod]
+*$py.class
 
-# Secret configuration (Security goal)
-.env
-*.key
-*.pem
+# --- INFRAESTRUCTURA (Docker, Kafka, DB) ---
+*/data/
+*/db-data/
+*.db
+*.sqlite3
 
-# Docker persistent data (Kafka/DB)
-*/data-kafka/
-*/data-postgres/
-
-# IDEs and OS
+# --- SISTEMA Y EDITORES ---
 .vscode/
 .idea/
 .DS_Store
-*.log
+Thumbs.db
