@@ -38,31 +38,31 @@ export class AuthService {
   }
 
   // ── LOGIN ────────────────────────────────────────────────────────
-  login(username: string, password: string): Observable<TokenResponse> {
-    const url = `${environment.keycloakUrl}/realms/${environment.keycloakRealm}/protocol/openid-connect/token`;
+login(username: string, password: string): Observable<TokenResponse> {
+  const url = `${environment.keycloakUrl}/realms/${environment.keycloakRealm}/protocol/openid-connect/token`;
 
-    // Keycloak ROPC requiere x-www-form-urlencoded, no JSON
-    const body = new URLSearchParams({
-      grant_type:    'password',
-      client_id:     environment.keycloakClientId,
-      username,
-      password,
-      scope:         'openid profile email'
-    });
+  const body = [
+    `grant_type=password`,
+    `client_id=${encodeURIComponent(environment.keycloakClientId)}`,
+    `username=${encodeURIComponent(username)}`,
+    `password=${encodeURIComponent(password)}`,
+    `scope=openid profile email`
+  ].join('&');
 
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded'
-    });
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/x-www-form-urlencoded'
+  });
 
-    return this.http.post<TokenResponse>(url, body.toString(), { headers }).pipe(
-      tap(res => {
-        // Guarda los tokens y actualiza el estado del usuario
-        localStorage.setItem(this.TOKEN_KEY,   res.access_token);
-        localStorage.setItem(this.REFRESH_KEY, res.refresh_token);
-        this.userSubject.next(this.parseToken(res.access_token));
-      })
-    );
-  }
+  return this.http.post<TokenResponse>(url, body, { headers }).pipe(
+    tap(res => {
+      localStorage.setItem(this.TOKEN_KEY,   res.access_token);
+      localStorage.setItem(this.REFRESH_KEY, res.refresh_token);
+      const userInfo = this.parseToken(res.access_token);
+      console.log('[AUTH] UserInfo parseado:', userInfo);  // ← confirma roles
+      this.userSubject.next(userInfo);                     // ← actualiza el estado
+    })
+  );
+}
 
   // ── LOGOUT ───────────────────────────────────────────────────────
   logout(): void {
@@ -77,17 +77,25 @@ export class AuthService {
     return localStorage.getItem(this.TOKEN_KEY);
   }
 
-  isLoggedIn(): boolean {
-    const token = this.getToken();
-    if (!token) return false;
-    // Verifica que el token no haya expirado
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload.exp * 1000 > Date.now();
-    } catch {
-      return false;
-    }
+ isLoggedIn(): boolean {
+  const token = this.getToken();
+  if (!token) return false;
+
+  try {
+    const parts = token.split('.');
+    if (parts.length !== 3) return false;          // token malformado
+
+    const payload = JSON.parse(atob(parts[1]));
+    if (!payload.exp) return false;
+
+    return payload.exp * 1000 > Date.now();        // verifica expiración
+  } catch {
+    // Si falla el parseo, borra el token corrupto
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    return false;
   }
+}
 
   getRoles(): string[] {
     return this.userSubject.getValue()?.roles ?? [];

@@ -13,10 +13,16 @@ export const routes: Routes = [
 
   // ── CLIENTE (sin login) ──────────────────────────────────────
   {
-    path: '',
+    path: 'menu',
     loadComponent: () => import('./features/menu/menu.component')
       .then(m => m.MenuComponent)
   },
+
+  {
+  path: 'cart',
+  loadComponent: () => import('./features/cart/cart.component')
+    .then(m => m.CartComponent)
+},
 
   // ── LOGIN (redirige a Keycloak) ───────────────────────────────
   {
@@ -31,5 +37,38 @@ export const routes: Routes = [
     canActivate: [authGuard],
     loadComponent: () => import('./features/dashboard/dashboard.component')
       .then(m => m.DashboardComponent)
+  },
+  {
+    path: 'kitchen',
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['chef'] },
+    loadComponent: () => import('./features/kitchen/kitchen.component')
+      .then(m => m.KitchenComponent)
+  },
+  {
+    path: 'waiter',
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['waiter'] },
+    loadComponent: () => import('./features/waiter/waiter.component')
+      .then(m => m.WaiterComponent)
+  },
+  {
+    path: 'billing',
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['cashier'] },
+    loadComponent: () => import('./features/billing/billing.component')
+      .then(m => m.BillingComponent)
+  },
+  {
+    path: 'admin',
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['admin'] },
+    loadComponent: () => import('./features/admin/admin.component')
+      .then(m => m.AdminComponent)
+  },
+  {
+    path: 'unauthorized',
+    loadComponent: () => import('./features/unauthorized/unauthorized.component')
+      .then(m => m.UnauthorizedComponent)
   }
 ];

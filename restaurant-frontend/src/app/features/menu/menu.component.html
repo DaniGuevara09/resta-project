@@ -1,0 +1,107 @@
+<div class="menu-page">
+
+  <!-- Header -->
+  <header class="menu-header">
+    <button class="btn-back" (click)="goHome()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5M12 5l-7 7 7 7"/>
+      </svg>
+      Inicio
+    </button>
+
+    <h1 class="menu-title">Nuestro Menú</h1>
+
+    <button class="btn-cart" (click)="goToCart()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+        <path d="M1 1h4l2.68 13.39a2 2 0 001.98 1.61h9.72a2 2 0 001.98-1.61L23 6H6"/>
+      </svg>
+      Mi pedido
+      <span class="cart-badge" *ngIf="cartService.totalItems > 0">
+        {{ cartService.totalItems }}
+      </span>
+    </button>
+  </header>
+
+  <!-- Categorías -->
+  <div class="categories">
+    <button
+      *ngFor="let cat of categories"
+      class="cat-btn"
+      [class.active]="selectedCategory === cat"
+      (click)="filterByCategory(cat)">
+      {{ cat }}
+    </button>
+  </div>
+
+  <!-- Loading -->
+  <div class="state-box" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Cargando productos...</p>
+  </div>
+
+  <!-- Error -->
+  <div class="state-box error" *ngIf="error && !loading">
+    <p>{{ error }}</p>
+    <button (click)="ngOnInit()">Reintentar</button>
+  </div>
+
+  <!-- Grid de productos -->
+  <div class="products-grid" *ngIf="!loading && !error">
+
+    <div class="product-card"
+         *ngFor="let product of filteredProducts">
+
+      <!-- Imagen -->
+      <div class="product-img">
+        <img *ngIf="product.imageUrl"
+             [src]="product.imageUrl"
+             [alt]="product.name"
+             (error)="product.imageUrl = ''"/>
+        <div class="product-img-placeholder" *ngIf="!product.imageUrl">🍽️</div>
+      </div>
+
+      <!-- Info -->
+      <div class="product-info">
+        <h3 class="product-name">{{ product.name }}</h3>
+        <p class="product-desc">{{ product.description }}</p>
+
+        <div class="product-footer">
+          <span class="product-price">
+            ${{ product.price | number:'1.0-0' }}
+          </span>
+
+          <!-- Sin items en carrito: botón + -->
+          <button class="btn-add"
+                  *ngIf="getQuantityInCart(product.id) === 0"
+                  (click)="addToCart(product, $event)">
+            +
+          </button>
+
+          <!-- Con items: controles - cantidad + -->
+          <div class="qty-controls" *ngIf="getQuantityInCart(product.id) > 0">
+            <button (click)="cartService.decrease(product.id)">−</button>
+            <span>{{ getQuantityInCart(product.id) }}</span>
+            <button (click)="addToCart(product, $event)">+</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Sin productos -->
+    <div class="empty" *ngIf="filteredProducts.length === 0">
+      <p>No hay productos en esta categoría</p>
+    </div>
+
+  </div>
+
+  <!-- Barra flotante del carrito -->
+  <div class="cart-float" *ngIf="cartService.totalItems > 0" (click)="goToCart()">
+    <span>{{ cartService.totalItems }} producto(s)</span>
+    <span>Ver pedido → ${{ cartService.totalPrice | number:'1.0-0' }}</span>
+  </div>
+
+</div>

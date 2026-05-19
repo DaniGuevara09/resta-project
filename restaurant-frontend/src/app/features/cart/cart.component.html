@@ -1,0 +1,36 @@
+<div class="cart-page">
+
+  <button class="btn-back" (click)="router.navigate(['/menu'])">
+    ← Volver al menú
+  </button>
+
+  <h2 class="cart-title">Mi pedido</h2>
+
+  <div class="cart-items">
+    <div class="cart-item" *ngFor="let item of cartService.items">
+      <div class="item-info">
+        <p class="item-name">{{ item.product.name }}</p>
+        <p class="item-qty">x{{ item.quantity }}</p>
+      </div>
+      <p class="item-price">
+        ${{ item.product.price * item.quantity | number:'1.0-0' }}
+      </p>
+    </div>
+  </div>
+
+  <div class="empty" *ngIf="cartService.items.length === 0">
+    No hay productos en el pedido
+  </div>
+
+  <div class="cart-total" *ngIf="cartService.items.length > 0">
+    <span>Total</span>
+    <span class="total-price">
+      ${{ cartService.totalPrice | number:'1.0-0' }}
+    </span>
+  </div>
+
+  <button class="btn-checkout" *ngIf="cartService.items.length > 0">
+    Continuar con el pedido →
+  </button>
+
+</div>
